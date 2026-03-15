@@ -1,0 +1,10 @@
+1
+
+g++ main.cpp ListaCompras.cpp -o execSistema
+
+2
+enter
+
+3
+
+./execSistema
