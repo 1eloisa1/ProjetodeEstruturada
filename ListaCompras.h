@@ -9,19 +9,16 @@
 using namespace std;
 
 typedef struct {
+    vector<string> clientesCodigos; // Índice -> Código Original
+    map<string, int> mapaCliente;   // Código Original -> Índice
 
-    vector<string> clientesCodigos;
-    map<string,int> mapaCliente;
+    vector<string> produtosNomes;   // Índice -> Nome do Produto
+    map<string, int> mapaProduto;   // Código Original do Produto -> Índice
 
-    vector<string> produtosNomes;
-    map<string,int> mapaProduto;
-
-    vector< list<int> > comprasCliente;
-
+    vector< list<int> > comprasCliente; // Lista de compras por cliente
 } ListaCompras;
 
 void carregarDados(ListaCompras *dados, const char *nomeArquivo);
-
 void mostrarComprasCliente(ListaCompras *dados, string codigoCliente);
 
 #endif
