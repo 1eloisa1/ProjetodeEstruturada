@@ -1,6 +1,8 @@
 1
 
-g++ main.cpp ListaCompras.cpp -o execSistema
+
+g++ main.cpp ListaCompras.cpp Similaridade.cpp -o execSistema
+
 
 2
 enter

@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "Similaridade.h"
+
+Matriz criarMatrizDensa(ListaCompras* dados) {
+    Matriz mat;
+    mat.linhas = (int)dados->clientesCodigos.size();
+    mat.colunas = (int)dados->produtosNomes.size();
+
+    mat.valores = (int**) malloc(mat.linhas * sizeof(int*));
+    for (int i = 0; i < mat.linhas; i++) {
+        mat.valores[i] = (int*) calloc(mat.colunas, sizeof(int)); // calloc já zera tudo
+    }
+
+    for (int i = 0; i < mat.linhas; i++) {
+        for (int idProduto : dados->comprasCliente[i]) {
+            mat.valores[i][idProduto] = 1;
+        }
+    }
+    return mat;
+}
+
+// Implementação do Algoritmo MultiplicaMatrizes(A, A_transposta)
+Matriz calcularIntersecao(Matriz* A) {
+    Matriz I;
+    I.linhas = A->linhas;
+    I.colunas = A->linhas; // A interseção é Cliente x Cliente
+
+    I.valores = (int**) malloc(I.linhas * sizeof(int*));
+    for (int i = 0; i < I.linhas; i++) {
+        I.valores[i] = (int*) calloc(I.colunas, sizeof(int));
+    }
+
+    // Algoritmo da imagem: C[i][j] = soma(A[i][k] * B[k][j])
+    // Como B é A_transposta, B[k][j] é o mesmo que A[j][k]
+    for (int i = 0; i < I.linhas; i++) {
+        for (int j = 0; j < I.colunas; j++) {
+            for (int k = 0; k < A->colunas; k++) {
+                I.valores[i][j] += A->valores[i][k] * A->valores[j][k];
+            }
+        }
+    }
+    return I;
+}
+
+MatrizSimilaridade calcularSimilaridade(Matriz* intersecao, ListaCompras* dados) {
+    MatrizSimilaridade S;
+    S.n = intersecao->linhas;
+    S.valores = (float**) malloc(S.n * sizeof(float*));
+
+    for (int i = 0; i < S.n; i++) {
+        S.valores[i] = (float*) malloc(S.n * sizeof(float));
+        
+        // |Pi| é a quantidade de produtos comprados pelo cliente i
+        float totalCompradoI = (float)dados->comprasCliente[i].size();
+
+        for (int j = 0; j < S.n; j++) {
+            if (totalCompradoI == 0) {
+                S.valores[i][j] = 1.0f;
+            } else {
+                // S(i,j) = 1 - (Intersecao / Itens de i)
+                S.valores[i][j] = 1.0f - ((float)intersecao->valores[i][j] / totalCompradoI);
+            }
+        }
+    }
+    return S;
+}
+
+void liberarMatriz(Matriz mat) {
+    for (int i = 0; i < mat.linhas; i++) free(mat.valores[i]);
+    free(mat.valores);
+}
+
+void liberarMatrizSim(MatrizSimilaridade mat) {
+    for (int i = 0; i < mat.n; i++) free(mat.valores[i]);
+    free(mat.valores);
+}
