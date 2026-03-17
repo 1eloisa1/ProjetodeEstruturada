@@ -1,5 +1,5 @@
 #include <iostream>
-#include <iomanip> // Para formatar as casas decimais
+#include <iomanip> 
 #include "ListaCompras.h"
 #include "Similaridade.h"
 
@@ -26,7 +26,7 @@ int main() {
 
 
     string c1, c2;
-    cout << "\n--- Teste de Similaridade ---" << endl;
+    cout << "\n Teste de Similaridade " << endl;
     for(int i = 0; i < 2; i++) {
         cout << "Digite o codigo do Cliente 1: "; cin >> c1;
         cout << "Digite o codigo do Cliente 2: "; cin >> c2;

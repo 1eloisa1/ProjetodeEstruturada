@@ -15,7 +15,7 @@ typedef struct {
     vector<string> produtosNomes;   // Índice -> Nome do Produto
     map<string, int> mapaProduto;   // Código Original do Produto -> Índice
 
-    vector< list<int> > comprasCliente; // Lista de compras por cliente
+    vector< list<int> > comprasCliente; 
 } ListaCompras;
 
 void carregarDados(ListaCompras *dados, const char *nomeArquivo);

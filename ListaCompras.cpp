@@ -7,9 +7,9 @@
 using namespace std;
 
 
-void podarEspacos(char *s) {
+static void podarEspacos(char *s) {
     int n = strlen(s);
-    while (n > 0 && (s[n-1] == ' ' || s[n-1] == '\r' || s[n-1] == '\n' || s[n-1] == '\t')) {
+    while (n > 0 && (s[n-1] == ' ' || s[n-1] == '\n' || s[n-1] == '\t')) {
         s[n-1] = '\0';
         n--;
     }
@@ -27,7 +27,7 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
     char cabecalho[500];
     fgets(cabecalho, sizeof(cabecalho), arquivo);
 
-    // MASCARA: %[^,] lê até a vírgula. %[^\n] lê até o fim da linha.
+
     while (fscanf(arquivo, " %[^,],%[^,],%[^,],%[^\n]", data, codCliente, codProduto, nomeProduto) == 4) {
         
         podarEspacos(codCliente);
@@ -56,7 +56,7 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
             indiceProduto = dados->mapaProduto[produtoStr];
         }
 
-        // Adicionar compra
+        
         dados->comprasCliente[indiceCliente].push_back(indiceProduto);
     }
 
