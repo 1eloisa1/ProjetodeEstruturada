@@ -9,10 +9,19 @@ int main() {
     ListaCompras dados;
     carregarDados(&dados, "dados_venda.csv");
 
-    cout << "Calculando matrizes... (isso pode demorar se a base for grande)" << endl;
+    cout << "Calculando matrizes... " << endl;
     Matriz A = criarMatrizDensa(&dados);
     Matriz I = calcularIntersecao(&A);
     MatrizSimilaridade S = calcularSimilaridade(&I, &dados);
+
+    string codigoEntrada;
+
+
+    for (int i = 1; i <= 3; i++) {
+        cout << "\n[" << i << "/3] Digite o codigo original do cliente: ";
+        cin >> codigoEntrada;
+        mostrarComprasCliente(&dados, codigoEntrada);
+    }
 
     string c1, c2;
     cout << "\n--- Teste de Similaridade ---" << endl;

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// Função auxiliar para remover espaços em branco do final das strings lidas pelo C
+
 void podarEspacos(char *s) {
     int n = strlen(s);
     while (n > 0 && (s[n-1] == ' ' || s[n-1] == '\r' || s[n-1] == '\n' || s[n-1] == '\t')) {
@@ -24,14 +24,12 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
 
     char data[50], codCliente[50], codProduto[50], nomeProduto[250];
 
-    // Pular a primeira linha (cabeçalho)
     char cabecalho[500];
     fgets(cabecalho, sizeof(cabecalho), arquivo);
 
     // MASCARA: %[^,] lê até a vírgula. %[^\n] lê até o fim da linha.
     while (fscanf(arquivo, " %[^,],%[^,],%[^,],%[^\n]", data, codCliente, codProduto, nomeProduto) == 4) {
         
-        // Limpar strings vindas do C
         podarEspacos(codCliente);
         podarEspacos(codProduto);
         podarEspacos(nomeProduto);
@@ -39,7 +37,6 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
         string clienteStr = codCliente;
         string produtoStr = codProduto;
 
-        // Gerenciar Cliente
         int indiceCliente;
         if (dados->mapaCliente.find(clienteStr) == dados->mapaCliente.end()) {
             indiceCliente = (int)dados->clientesCodigos.size();
@@ -50,7 +47,6 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
             indiceCliente = dados->mapaCliente[clienteStr];
         }
 
-        // Gerenciar Produto
         int indiceProduto;
         if (dados->mapaProduto.find(produtoStr) == dados->mapaProduto.end()) {
             indiceProduto = (int)dados->produtosNomes.size();

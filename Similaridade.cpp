@@ -1,8 +1,6 @@
-
 #include <stdio.h>  
 #include <stdlib.h> 
 #include "Similaridade.h" 
-
 
 Matriz criarMatrizDensa(ListaCompras* dados) {
     Matriz mat;
@@ -11,7 +9,11 @@ Matriz criarMatrizDensa(ListaCompras* dados) {
 
     mat.valores = (int**) malloc(mat.linhas * sizeof(int*));
     for (int i = 0; i < mat.linhas; i++) {
-        mat.valores[i] = (int*) calloc(mat.colunas, sizeof(int));
+        mat.valores[i] = (int*) malloc(mat.colunas * sizeof(int));
+        
+        for (int j = 0; j < mat.colunas; j++) {
+            mat.valores[i][j] = 0;
+        }
     }
 
     for (int i = 0; i < mat.linhas; i++) {
@@ -26,12 +28,14 @@ Matriz calcularIntersecao(Matriz* A) {
     Matriz I;
     I.linhas = A->linhas;   
     I.colunas = A->linhas;
-
-
     
     I.valores = (int**) malloc(I.linhas * sizeof(int*));
     for (int i = 0; i < I.linhas; i++) {
-        I.valores[i] = (int*) calloc(I.colunas, sizeof(int)); 
+        I.valores[i] = (int*) malloc(I.colunas * sizeof(int)); 
+        
+        for (int j = 0; j < I.colunas; j++) {
+            I.valores[i][j] = 0;
+        }
     }
 
     for (int i = 0; i < I.linhas; i++) {          
@@ -48,8 +52,7 @@ MatrizSimilaridade calcularSimilaridade(Matriz* intersecao, ListaCompras* dados)
     MatrizSimilaridade S;
     S.n = intersecao->linhas;
     S.valores = (float**) malloc(S.n * sizeof(float*));
-
-
+    
     for (int i = 0; i < S.n; i++) {
         S.valores[i] = (float*) malloc(S.n * sizeof(float));
        
