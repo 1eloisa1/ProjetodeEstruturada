@@ -2,7 +2,7 @@
 #include <stdlib.h> 
 #include "Similaridade.h" 
 
-Matriz criarMatrizDensa(ListaCompras* dados) {
+Matriz criarMatrizClienteProduto(ListaCompras* dados) {
     Matriz mat;
     mat.linhas = (int)dados->clientesCodigos.size();
     mat.colunas = (int)dados->produtosNomes.size();

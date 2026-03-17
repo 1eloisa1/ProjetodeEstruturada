@@ -61,8 +61,9 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
     }
 
     fclose(arquivo);
-    printf("Carga finalizada. %d clientes e %d produtos lidos.\n", 
-            (int)dados->clientesCodigos.size(), (int)dados->produtosNomes.size());
+
+    /*printf("Carga finalizada. %d clientes e %d produtos lidos.\n", 
+        (int)dados->clientesCodigos.size(), (int)dados->produtosNomes.size());*/
 }
 
 void mostrarComprasCliente(ListaCompras *dados, string codigoCliente) {

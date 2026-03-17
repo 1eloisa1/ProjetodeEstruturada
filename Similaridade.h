@@ -15,7 +15,7 @@ typedef struct {
     float **valores; 
 } MatrizSimilaridade;
 
-Matriz criarMatrizDensa(ListaCompras* dados);
+Matriz criarMatrizClienteProduto(ListaCompras* dados);
 
 Matriz calcularIntersecao(Matriz* A);
 
