@@ -6,8 +6,7 @@
 
 using namespace std;
 
-
-static void podarEspacos(char *s) {
+ void podarEspacos(char *s) {
     int n = strlen(s);
     while (n > 0 && (s[n-1] == ' ' || s[n-1] == '\n' || s[n-1] == '\t')) {
         s[n-1] = '\0';
@@ -55,15 +54,14 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
         } else {
             indiceProduto = dados->mapaProduto[produtoStr];
         }
-
+        
         
         dados->comprasCliente[indiceCliente].push_back(indiceProduto);
     }
 
     fclose(arquivo);
 
-    /*printf("Carga finalizada. %d clientes e %d produtos lidos.\n", 
-        (int)dados->clientesCodigos.size(), (int)dados->produtosNomes.size());*/
+
 }
 
 void mostrarComprasCliente(ListaCompras *dados, string codigoCliente) {
@@ -76,6 +74,6 @@ void mostrarComprasCliente(ListaCompras *dados, string codigoCliente) {
     printf("Historico de compras do cliente %s:\n", codigoCliente.c_str());
 
     for (int idProd : dados->comprasCliente[indice]) {
-        cout << " - " << dados->produtosNomes[idProd] << endl;
+        printf(" - %s\n", dados->produtosNomes[idProd].c_str());
     }
 }

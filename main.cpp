@@ -2,6 +2,7 @@
 #include <iomanip> 
 #include "ListaCompras.h"
 #include "Similaridade.h"
+#include "Recomendacao.h"
 
 using namespace std;
 
@@ -9,7 +10,7 @@ int main() {
     ListaCompras dados;
     carregarDados(&dados, "dados_venda.csv");
 
-    cout << "Calculando matrizes... " << endl;
+    printf("Calculando matrizes... \n");
     Matriz A = criarMatrizClienteProduto(&dados);
     Matriz I = calcularIntersecao(&A);
     MatrizSimilaridade S = calcularSimilaridade(&I, &dados);
@@ -19,14 +20,14 @@ int main() {
     string codigoEntrada;
     
     for (int i = 1; i <= 3; i++) {
-        cout << "\n[" << i << "/3] Digite o codigo original do cliente: ";
+        printf("%d/3] Digite o codigo original do cliente: ", i);
         cin >> codigoEntrada;
         mostrarComprasCliente(&dados, codigoEntrada);
     }
 
 
     string c1, c2;
-    cout << "\n Teste de Similaridade " << endl;
+    printf("\n Teste de Similaridade \n");
     for(int i = 0; i < 2; i++) {
         cout << "Digite o codigo do Cliente 1: "; cin >> c1;
         cout << "Digite o codigo do Cliente 2: "; cin >> c2;
@@ -43,6 +44,14 @@ int main() {
         }
     }
 
+
+     for (int i = 1; i <= 3; i++) {
+        printf("%d/3] Digite o codigo original do cliente: ", i);
+        cin >> codigoEntrada;
+        mostraRecomendacoes(&dados, &S, codigoEntrada);
+    }
+
+    
     liberarMatriz(A);
     liberarMatriz(I);
     liberarMatrizSim(S);

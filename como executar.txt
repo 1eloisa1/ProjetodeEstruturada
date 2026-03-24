@@ -3,10 +3,7 @@
 
 g++ main.cpp ListaCompras.cpp Similaridade.cpp -o execSistema
 
-
 2
-enter
 
-3
 
 ./execSistema
