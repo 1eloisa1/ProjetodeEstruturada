@@ -20,7 +20,7 @@ int main() {
         cout << "1. Usar o algoritimo padrao | 2. Usar o algoritmo adaptado" << endl;
         cin >> escolha;
 
-    clock_t t_ini = clock();
+    clock_t inicio = clock();
 
     if (escolha == 2) {
         printf("Calculando via Adaptado...\n");
@@ -32,8 +32,8 @@ int main() {
         liberarMatriz(At);
     }
 
-    clock_t t_fim = clock();
-    double tempo = (double)(t_fim - t_ini) / CLOCKS_PER_SEC;
+    clock_t fim = clock();
+    double tempo = (double)(fim - inicio) / CLOCKS_PER_SEC;
     printf("Tempo de processamento: %.4f segundos\n", tempo);
     
 

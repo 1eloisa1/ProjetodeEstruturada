@@ -59,10 +59,10 @@ void mostrarComprasCliente(ListaCompras *dados, string codigoCliente) {
         return;
     }
 
-    int indice = dados->mapaCliente[codigoCliente];
+    int codigo = dados->mapaCliente[codigoCliente];
     printf("Historico de compras do cliente %s:\n", codigoCliente.c_str());
 
-    for (int idProd : dados->comprasCliente[indice]) {
+    for (int idProd : dados->comprasCliente[codigo]) {
         printf(" - %s\n", dados->produtoNomes[idProd].c_str());
     }
 }
