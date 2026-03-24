@@ -3,11 +3,15 @@
 
 #include "ListaCompras.h"
 
-bool compararSimilaridade(Similares a, Similaridade b);
 
 void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codigoEntrada);
-list<int> similares;
 
-vector<double> R;
+typedef struct  {
+    string nome;
+    double similaridade;
+} ProdutoRanqueado;
+
+bool compararSimilaridade(const ProdutoRanqueado &a, const ProdutoRanqueado &b);
+
 
 #endif

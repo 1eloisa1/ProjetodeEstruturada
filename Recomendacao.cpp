@@ -7,12 +7,19 @@
 #include "Recomendacao.h"
 #include <stdio.h>
 
-bool compararSimilaridade(Similares a, Similaridade b) {
+bool compararSimilaridade(const ProdutoRanqueado &a, const ProdutoRanqueado &b) {
     return a.similaridade < b.similaridade; 
 }
 
+
 // lista com todos os clientes com similariade ao cliente de entrada, ordenada por similaridade
 void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codigoEntrada) {
+
+
+    list<int> similares;
+    vector<double> R;
+    vector<ProdutoRanqueado> Lista;
+    
     if (dados->mapaCliente.count(codigoEntrada) == 0) {
         printf("Cliente nao encontrado!\n");
         return;
@@ -43,18 +50,26 @@ void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codi
             }
         }
 
+        
+    for(int i = 0; i < R.size(); i++){
+        if(R[i] != 1.0) {
+            ProdutoRanqueado temp;
+            temp.nome = dados->produtosNomes[i];
+            temp.similaridade = R[i];
+            Lista.push_back(temp);
+        }
+    }
+
+    sort(Lista.begin(), Lista.end(), compararSimilaridade);
+        for (int i = 0; i < Lista.size(); i++) {
+        printf("Produto: %s, Ranqueamento: %.4f\n", Lista[i].nome.c_str(), Lista[i].similaridade);
+    }
+        }
+
         //Ordene o vetor 𝑅 de forma não decrescente e retorne os 𝑘 primeiros produtos da lista 𝑅. Estes serão os produtos melhor ranqueados e, portanto, recomendados ao cliente 𝑐.
     
-        for (int i = 0; i < R.size(); i++) {
-            // ordem crescente de similaridade
-            sort(R.begin(), R.end(), compararSimilaridade);
-            printf("Produto: %s, Ranqueamento: %.4f\n", dados->produtosNomes[i].c_str(), R[i]);
-        }
 
 }
     //s nomes dos 𝑘 produtos melhor recomendados para cada cliente, demonstrando a funcionalidade completa do sistema de recomendação
 
     // Crie uma lista 𝐿 com todos os clientes que possuem  similaridade com 𝑐 (similaridade menor que 1 e que não seja o próprio cliente 𝑐);
-
-
-}
