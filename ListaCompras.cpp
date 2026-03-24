@@ -21,7 +21,6 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
 
 
     while (fscanf(arquivo, " %[^,],%[^,],%[^,],%[^\n]", data, codCliente, codProduto, nomeProduto) == 4) {
-        
 
         string clienteStr = codCliente;
         string produtoStr = codProduto;
@@ -46,13 +45,11 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
         } else {
             indiceProduto = dados->mapaProduto[produtoStr];
         }
-
         
         dados->comprasCliente[indiceCliente].push_back(indiceProduto);
     }
 
     fclose(arquivo);
-
 
 }
 

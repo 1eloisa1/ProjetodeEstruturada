@@ -22,7 +22,6 @@ Matriz criarMatrizClienteProduto(ListaCompras* dados) {
     return mat;
 }
 
-
 Matriz calculaTransposta(Matriz* A) {
     Matriz At;
     At.linhas = A->colunas;
@@ -66,8 +65,7 @@ Matriz multiplica_por_transposta(Matriz* A) {
     C.linhas = A->linhas;
     C.colunas = A->linhas; 
 
-     C.valores = (int**) malloc(C.linhas * sizeof(int*));
-    
+    C.valores = (int**) malloc(C.linhas * sizeof(int*));
     for (int i = 0; i < C.linhas; i++) {
         C.valores[i] = (int*) malloc(C.colunas * sizeof(int));
     }
