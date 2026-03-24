@@ -19,13 +19,13 @@ void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codi
     list<int> similares;
     vector<double> R;
     vector<ProdutoRanqueado> Lista;
-    
+
     if (dados->mapaCliente.count(codigoEntrada) == 0) {
         printf("Cliente nao encontrado!\n");
         return;
     } else{
         for (int i = 0; i < S->n; i++) {
-            if (dados->clientesCodigos[i] == codigoEntrada) {
+            if (dados->clienteCodigo[i] == codigoEntrada) {
                 continue;
             }
             if (S->valores[dados->mapaCliente[codigoEntrada]][i] < 1) {
@@ -36,7 +36,7 @@ void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codi
         int indice = dados->mapaCliente[codigoEntrada];
 
 
-        for (int i = 0; i < dados->produtosNomes.size(); i++) {
+        for (int i = 0; i < dados->produtoCodigo.size(); i++) {
             R.push_back(1.0);
         } 
 
@@ -51,10 +51,10 @@ void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codi
         }
 
         
-    for(int i = 0; i < R.size(); i++){
+    for(int i = 0; i <= 10; i++){
         if(R[i] != 1.0) {
             ProdutoRanqueado temp;
-            temp.nome = dados->produtosNomes[i];
+            temp.nome = dados->produtoNomes[i];
             temp.similaridade = R[i];
             Lista.push_back(temp);
         }
@@ -62,7 +62,7 @@ void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codi
 
     sort(Lista.begin(), Lista.end(), compararSimilaridade);
         for (int i = 0; i < Lista.size(); i++) {
-        printf("Produto: %s, Ranqueamento: %.4f\n", Lista[i].nome.c_str(), Lista[i].similaridade);
+            printf("Produto recomendado %d: %s\n", i + 1, Lista[i].nome.c_str());
     }
         }
 

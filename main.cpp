@@ -20,7 +20,7 @@ int main() {
     string codigoEntrada;
     
     for (int i = 1; i <= 3; i++) {
-        printf("%d/3] Digite o codigo original do cliente: ", i);
+        printf("[%d/3] Digite o codigo original do cliente: ", i);
         cin >> codigoEntrada;
         mostrarComprasCliente(&dados, codigoEntrada);
     }
@@ -32,6 +32,10 @@ int main() {
         cout << "Digite o codigo do Cliente 1: "; cin >> c1;
         cout << "Digite o codigo do Cliente 2: "; cin >> c2;
 
+        if(c1 == c2) {
+            cout << "Os clientes sao os mesmos!" << endl;
+            continue;
+        }
         if(dados.mapaCliente.count(c1) && dados.mapaCliente.count(c2)) {
             int idx1 = dados.mapaCliente[c1];
             int idx2 = dados.mapaCliente[c2];
@@ -44,14 +48,14 @@ int main() {
         }
     }
 
-
-     for (int i = 1; i <= 3; i++) {
-        printf("%d/3] Digite o codigo original do cliente: ", i);
+    printf("\n Recomendacoes \n");
+    for (int i = 1; i <= 3; i++) {
+        printf("[%d/3] Digite o codigo original do cliente: ", i);
         cin >> codigoEntrada;
         mostraRecomendacoes(&dados, &S, codigoEntrada);
-    }
+}
 
-    
+
     liberarMatriz(A);
     liberarMatriz(I);
     liberarMatrizSim(S);

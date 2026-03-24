@@ -6,13 +6,6 @@
 
 using namespace std;
 
- void podarEspacos(char *s) {
-    int n = strlen(s);
-    while (n > 0 && (s[n-1] == ' ' || s[n-1] == '\n' || s[n-1] == '\t')) {
-        s[n-1] = '\0';
-        n--;
-    }
-}
 
 void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
     FILE *arquivo = fopen(nomeArquivo, "r");
@@ -29,17 +22,15 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
 
     while (fscanf(arquivo, " %[^,],%[^,],%[^,],%[^\n]", data, codCliente, codProduto, nomeProduto) == 4) {
         
-        podarEspacos(codCliente);
-        podarEspacos(codProduto);
-        podarEspacos(nomeProduto);
 
         string clienteStr = codCliente;
         string produtoStr = codProduto;
+        string nomeStr = nomeProduto;
 
         int indiceCliente;
         if (dados->mapaCliente.find(clienteStr) == dados->mapaCliente.end()) {
-            indiceCliente = (int)dados->clientesCodigos.size();
-            dados->clientesCodigos.push_back(clienteStr);
+            indiceCliente = (int)dados->clienteCodigo.size();
+            dados->clienteCodigo.push_back(clienteStr);
             dados->mapaCliente[clienteStr] = indiceCliente;
             dados->comprasCliente.push_back(list<int>());
         } else {
@@ -48,13 +39,14 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
 
         int indiceProduto;
         if (dados->mapaProduto.find(produtoStr) == dados->mapaProduto.end()) {
-            indiceProduto = (int)dados->produtosNomes.size();
-            dados->produtosNomes.push_back(nomeProduto);
+            indiceProduto = (int)dados->produtoCodigo.size();
+            dados->produtoCodigo.push_back(produtoStr);
+            dados->produtoNomes.push_back(nomeStr);
             dados->mapaProduto[produtoStr] = indiceProduto;
         } else {
             indiceProduto = dados->mapaProduto[produtoStr];
         }
-        
+
         
         dados->comprasCliente[indiceCliente].push_back(indiceProduto);
     }
@@ -74,6 +66,6 @@ void mostrarComprasCliente(ListaCompras *dados, string codigoCliente) {
     printf("Historico de compras do cliente %s:\n", codigoCliente.c_str());
 
     for (int idProd : dados->comprasCliente[indice]) {
-        printf(" - %s\n", dados->produtosNomes[idProd].c_str());
+        printf(" - %s\n", dados->produtoNomes[idProd].c_str());
     }
 }

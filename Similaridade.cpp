@@ -4,8 +4,8 @@
 
 Matriz criarMatrizClienteProduto(ListaCompras* dados) {
     Matriz mat;
-    mat.linhas = (int)dados->clientesCodigos.size();
-    mat.colunas = (int)dados->produtosNomes.size();
+    mat.linhas = (int)dados->clienteCodigo.size();
+    mat.colunas = (int)dados->produtoCodigo.size();
 
     mat.valores = (int**) malloc(mat.linhas * sizeof(int*));
     for (int i = 0; i < mat.linhas; i++) {

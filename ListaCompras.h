@@ -9,10 +9,11 @@
 using namespace std;
 
 typedef struct {
-    vector<string> clientesCodigos; 
+    vector<string> clienteCodigo; 
     map<string, int> mapaCliente;   
 
-    vector<string> produtosNomes;   
+    vector<string> produtoCodigo;   
+    vector<string> produtoNomes;
     map<string, int> mapaProduto;  
 
     vector< list<int> > comprasCliente; 
