@@ -1,6 +1,99 @@
-#include <stdio.h>  
-#include <stdlib.h> 
-#include "Similaridade.h" 
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h> 
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <list>
+#include <string>
+#include <stdio.h>
+#include <map>
+#include <cmath>
+
+namespace py = pybind11;
+using namespace std;
+
+typedef struct {
+    vector<string> clienteCodigo; 
+    map<string, int> mapaCliente;   
+
+    vector<string> produtoCodigo;   
+    vector<string> produtoNomes;
+    map<string, int> mapaProduto;  
+
+    vector< list<int> > comprasCliente; 
+} ListaCompras;
+
+typedef struct {
+    int linhas;     
+    int colunas;    
+    int **valores;  
+} Matriz;
+
+typedef struct {
+    int n;          
+    float **valores; 
+} MatrizSimilaridade;
+
+typedef struct  {
+    string nome;
+    double similaridade;
+} ProdutoRanqueado;
+
+bool compararSimilaridade(const ProdutoRanqueado &a, const ProdutoRanqueado &b) {
+    return a.similaridade < b.similaridade; //acho que ta errado, ver depois
+}
+
+void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codigoEntrada) {
+
+    list<int> similares;
+    vector<double> R;
+    vector<ProdutoRanqueado> Vetor;
+
+    if (dados->mapaCliente.count(codigoEntrada) == 0) {
+        printf("Cliente nao encontrado!\n");
+        return;
+
+    } else{
+        for (int i = 0; i < S->n; i++) {
+            if (dados->clienteCodigo[i] == codigoEntrada) {
+                continue;
+            }
+            if (S->valores[dados->mapaCliente[codigoEntrada]][i] < 1) {
+                similares.push_back(i);
+            }
+        }
+        
+        int indice = dados->mapaCliente[codigoEntrada];
+
+        for (int i = 0; i < dados->produtoCodigo.size(); i++) {
+            R.push_back(1.0);
+        } 
+
+        for(int s : similares) {
+            for(int p : dados->comprasCliente[s]) {
+                if(find(dados->comprasCliente[indice].begin(), dados->comprasCliente[indice].end(),  p) == dados->comprasCliente[indice].end()) {
+                    R[p] *= S->valores[indice][s];
+                }
+            }
+        }
+
+        
+    for(int i = 1; i <= 10; i++){
+        if(R[i] != 1.0) {
+            ProdutoRanqueado temp;
+            temp.nome = dados->produtoNomes[i];
+            temp.similaridade = R[i];
+            Vetor.push_back(temp);
+        }
+    }
+
+    sort(Vetor.begin(), Vetor.end(), compararSimilaridade);
+        for (int i = 0; i < Vetor.size(); i++) {
+            printf("Produto recomendado %d: %s\n", i + 1, Vetor[i].nome.c_str());
+    }
+        }
+
+} 
 
 Matriz criarMatrizClienteProduto(ListaCompras* dados) {
     Matriz mat;
@@ -115,4 +208,17 @@ void liberarMatrizSim(MatrizSimilaridade mat) {
         free(mat.valores[i]);
     }
     free(mat.valores); 
+}
+
+
+PYBIND11_MODULE(meu_solver, m) {
+    m.doc() = "Modulo unico que integra a logica de recomendacao C++"; [cite: 111]
+
+    // Em vez de registrar as funções internas complexas, 
+    // registre funções que aceitem strings e vetores simples.
+    
+    m.def("recomendar", &mostraRecomendacoes, "Gera recomendacoes para o cliente"); [cite: 214]
+    
+    // Se quiser expor a similaridade separadamente:
+    m.def("obter_similaridade", &calcularSimilaridade, "Calcula matriz de similaridade"); [cite: 118]
 }
