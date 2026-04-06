@@ -11,13 +11,16 @@ bool compararSimilaridade(const ProdutoRanqueado &a, const ProdutoRanqueado &b) 
     return a.similaridade < b.similaridade; 
 }
 
-void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codigoEntrada) {
+vector<tuple<string, double>>  mostraRecomendacoes(ListaCompras *dados,  vector<vector<double>>& MatrizSimilaridade *S, string codigoEntrada) {
 
 
     list<int> similares;
     vector<double> R;
     vector<ProdutoRanqueado> Vetor;
 
+
+    int totalProdutos = dados.vetorProdutos.size();
+    int totalClientes = dados.vetorClientes.size();
     if (dados->mapaCliente.count(codigoEntrada) == 0) {
         printf("Cliente nao encontrado!\n");
         return;
@@ -57,7 +60,7 @@ void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codi
         }
     }
 
-    sort(Vetor.begin(), Vetor.end(), compararSimilaridade);
+    std::sort(Vetor.begin(), Vetor.end(), compararSimilaridade);
         for (int i = 0; i < Vetor.size(); i++) {
             printf("Produto recomendado %d: %s\n", i + 1, Vetor[i].nome.c_str());
     }
