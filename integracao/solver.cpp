@@ -55,7 +55,7 @@ void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codi
 
     } else{
         for (int i = 0; i < S->n; i++) {
-            if (dados->clienteCodigo[i] == codigoEntrada) {
+            if (dados->clienteCodigo[i] == codigoEntrada){
                 continue;
             }
             if (S->valores[dados->mapaCliente[codigoEntrada]][i] < 1) {
@@ -210,15 +210,16 @@ void liberarMatrizSim(MatrizSimilaridade mat) {
     free(mat.valores); 
 }
 
+void recomendar(string id_digitado, vector<vector<string>> dados_csv) {
+    ListaCompras dados;
+
+    //tem que converter para o csv lido em python para struct aqui, depois criar a matriz cliente-produto, calcular a transposta, calcular a intersecao, calcular a similaridade e mostrar as recomendacoes, por fim liberar a memoria alocada
+
+
+
 
 PYBIND11_MODULE(meu_solver, m) {
-    m.doc() = "Modulo unico que integra a logica de recomendacao C++"; [cite: 111]
-
-    // Em vez de registrar as funções internas complexas, 
-    // registre funções que aceitem strings e vetores simples.
-    
-    m.def("recomendar", &mostraRecomendacoes, "Gera recomendacoes para o cliente"); [cite: 214]
-    
-    // Se quiser expor a similaridade separadamente:
-    m.def("obter_similaridade", &calcularSimilaridade, "Calcula matriz de similaridade"); [cite: 118]
+    m.doc() = "Sistema Completo de Recomendacao"; 
+    m.def("recomendar", &recomendar, "Executa todo o processo e limpa memoria no fim",
+          py::arg("id_alvo"), py::arg("dados_csv"));
 }

@@ -1,7 +1,6 @@
 import csv
 import os
 
-# Dicionário global para armazenar os dados
 # Estrutura: { 'cod_cliente': ['Produto A', 'Produto B'] }
 mapa_compras = {}
 

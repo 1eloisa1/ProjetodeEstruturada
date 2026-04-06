@@ -1,85 +1,90 @@
-#include <iostream>
-#include <iomanip> 
-#include <ctime>
-#include "ListaCompras.h"
-#include "Similaridade.h"
-#include "Recomendacao.h"
+import csv
+import os
+import time
+import meu_solver
 
-using namespace std;
+def main():
+    arquivo = 'dados_venda.csv'
 
-int main() {
-    ListaCompras dados;
-    carregarDados(&dados, "dados_venda.csv");
+    if not os.path.exists(arquivo):
+        print(f"Erro: O arquivo '{arquivo}' nao foi encontrado.")
+        return
+    
+    dados_csv = []
+    with open(arquivo, mode='r', encoding='utf-8') as file:
+        leitor = csv.reader(file)
 
-    printf("Calculando matrizes... \n");
-    Matriz A = criarMatrizClienteProduto(&dados);
-    Matriz I;
+        next(leitor) 
 
-    int escolha;
-    cout << "Escolha como vai executar o teste: " << endl;
-        cout << "1. Usar o algoritimo padrao | 2. Usar o algoritmo adaptado" << endl;
-        cin >> escolha;
+        for linha in leitor:
+            dados_csv.append(linha)
 
-    clock_t inicio = clock();
+    print("Calculando matrizes... \n");
+   
+
+    print("Escolha como vai executar o teste: ");
+    print("1. Usar o algoritimo padrao | 2. Usar o algoritmo adaptado");
+    escolha = int(input("Digite sua escolha: "));
+
+    inicio = time.time();
 
     if (escolha == 2) {
-        printf("Calculando via Adaptado...\n");
+        print("Calculando via Adaptado...\n");
         I = multiplica_por_transposta(&A);
     } else {
-        printf("Calculando via Padrao...\n");
+        print("Calculando via Padrao...\n");
         Matriz At = calculaTransposta(&A);
         I = calcularIntersecao(&A, &At);
         liberarMatriz(At);
     }
 
-    clock_t fim = clock();
-    double tempo = (double)(fim - inicio) / CLOCKS_PER_SEC;
-    printf("Tempo de processamento: %.4f segundos\n", tempo);
+    fim = time.time()
+    tempo = fim - inicio
+    print(f"Tempo de processamento: {tempo:.4f} segundos\n", tempo);
+
+    for i in range(3):
+        print(f"[{i+1}/3] Digite o codigo original do cliente: ", end="")
+        codigoEntrada = input()
+        mostrarComprasCliente(&dados, codigoEntrada)
     
 
     MatrizSimilaridade S = calcularSimilaridade(&I, &dados);
     string codigoEntrada;
     
-    for (int i = 1; i <= 3; i++) {
-        printf("[%d/3] Digite o codigo original do cliente: ", i);
-        cin >> codigoEntrada;
-        mostrarComprasCliente(&dados, codigoEntrada);
-    }
 
-    printf("\n Teste de Similaridade \n");
-    for(int i = 0; i < 2; i++) {
-        string c1, c2;
-        cout << "Digite o codigo do Cliente 1: "; cin >> c1;
-        cout << "Digite o codigo do Cliente 2: "; cin >> c2;
+
+    print("\n Teste de Similaridade \n");
+    for i in range(2):
+        c1 = input("Digite o codigo do Cliente 1: ");
+        c2 = input("Digite o codigo do Cliente 2: ");
 
         if(c1 == c2) {
-            cout << "Os clientes sao os mesmos!" << endl;
-        continue;
-    }
-        if(dados.mapaCliente.count(c1) && dados.mapaCliente.count(c2)) {
-            int idx1 = dados.mapaCliente[c1];
-            int idx2 = dados.mapaCliente[c2];
-            cout << "Intersecao (produtos em comum): " << I.valores[idx1][idx2] << endl;
-            cout << "Similaridade S(" << c1 << ", " << c2 << "): " 
-                << fixed << setprecision(4) << S.valores[idx1][idx2] << endl;
-    } else {
-        cout << "Um dos clientes nao foi encontrado!" << endl;
-    }
-}
+            print("Os clientes sao os mesmos!");
+            continue;
+        }
+        if(dados.mapaCliente.count(c1) and dados.mapaCliente.count(c2)):
+            idx1 = dados.mapaCliente[c1];
+            idx2 = dados.mapaCliente[c2];
+            print("Intersecao (produtos em comum): %d", I.valores[idx1][idx2]);
+            print("Similaridade S(%s, %s): %.4f", c1.c_str(), c2.c_str(), S.valores[idx1][idx2]);
+    
+        else:
+            print("Um dos clientes nao foi encontrado!");
+    
 
-        printf("\n Recomendacoes \n");
-        for (int i = 1; i <= 3; i++) {
-            printf("[%d/3] Digite o codigo original do cliente: ", i);
-            cin >> codigoEntrada;
+
+        print("\n Recomendacoes \n");
+        for i in range(3):
+            print("[%d/3] Digite o codigo original do cliente: ", i+1);
+            codigoEntrada = input();
             mostraRecomendacoes(&dados, &S, codigoEntrada);
-}
 
 
         liberarMatriz(A);
         liberarMatriz(I);
         liberarMatrizSim(S);
 
-        
 
-    return 0;
 }
+if __name__ == "__main__":
+    main()
