@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string.h>
+#include <algorithm>
 #include "ListaCompras.h"
 
 using namespace std;
-
 
 void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
     FILE *arquivo = fopen(nomeArquivo, "r");
@@ -19,7 +19,6 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
     char cabecalho[500];
     fgets(cabecalho, sizeof(cabecalho), arquivo);
 
-
     while (fscanf(arquivo, " %[^,],%[^,],%[^,],%[^\n]", data, codCliente, codProduto, nomeProduto) == 4) {
 
         string clienteStr = codCliente;
@@ -28,7 +27,7 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
 
         int indiceCliente;
         if (dados->mapaCliente.find(clienteStr) == dados->mapaCliente.end()) {
-            indiceCliente = (int)dados->clienteCodigo.size();
+            indiceCliente = dados->clienteCodigo.size();
             dados->clienteCodigo.push_back(clienteStr);
             dados->mapaCliente[clienteStr] = indiceCliente;
             dados->comprasCliente.push_back(list<int>());
@@ -38,31 +37,35 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
 
         int indiceProduto;
         if (dados->mapaProduto.find(produtoStr) == dados->mapaProduto.end()) {
-            indiceProduto = (int)dados->produtoCodigo.size();
+            indiceProduto = dados->produtoCodigo.size();
             dados->produtoCodigo.push_back(produtoStr);
             dados->produtoNomes.push_back(nomeStr);
             dados->mapaProduto[produtoStr] = indiceProduto;
         } else {
             indiceProduto = dados->mapaProduto[produtoStr];
         }
-        
-        dados->comprasCliente[indiceCliente].push_back(indiceProduto);
+
+        // EVITA DUPLICADOS
+        if (find(dados->comprasCliente[indiceCliente].begin(),
+                 dados->comprasCliente[indiceCliente].end(),
+                 indiceProduto) == dados->comprasCliente[indiceCliente].end()) {
+            dados->comprasCliente[indiceCliente].push_back(indiceProduto);
+        }
     }
 
     fclose(arquivo);
-
 }
 
 void mostrarComprasCliente(ListaCompras *dados, string codigoCliente) {
     if (dados->mapaCliente.find(codigoCliente) == dados->mapaCliente.end()) {
-        printf("Erro: Cliente %s nao encontrado no sistema.\n", codigoCliente.c_str());
+        printf("Cliente nao encontrado\n");
         return;
     }
 
-    int codigo = dados->mapaCliente[codigoCliente];
-    printf("Historico de compras do cliente %s:\n", codigoCliente.c_str());
+    int idx = dados->mapaCliente[codigoCliente];
 
-    for (int idProd : dados->comprasCliente[codigo]) {
-        printf(" - %s\n", dados->produtoNomes[idProd].c_str());
+    printf("Compras do cliente %s:\n", codigoCliente.c_str());
+    for (int p : dados->comprasCliente[idx]) {
+        printf(" - %s\n", dados->produtoNomes[p].c_str());
     }
 }

@@ -2,16 +2,19 @@
 #define RECOMENDACAO_H
 
 #include "ListaCompras.h"
+#include "Similaridade.h"
+#include <vector>
+#include <string>
 
-
-void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codigoEntrada);
+using namespace std;
 
 typedef struct  {
     string nome;
-    double similaridade;
+    double score;
 } ProdutoRanqueado;
 
-bool compararSimilaridade(const ProdutoRanqueado &a, const ProdutoRanqueado &b);
+void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codigoEntrada, int k);
 
+bool compararSimilaridade(const ProdutoRanqueado &a, const ProdutoRanqueado &b);
 
 #endif

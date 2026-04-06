@@ -5,8 +5,7 @@ ext_modules = [
     Pybind11Extension(
         "sistema_de_recomendacao_py", 
         [
-            "wrapper.cpp", 
-            ".cpp", 
+            "converter.cpp", 
             "ListaCompras.cpp", 
             "Recomendacao.cpp", 
             "Similaridade.cpp"
