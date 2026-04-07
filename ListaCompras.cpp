@@ -4,7 +4,7 @@
 #include <string.h>
 #include <algorithm>
 #include "ListaCompras.h"
-//mesma coisa
+
 using namespace std;
 
 void carregarDados(ListaCompras *dados, const char *nomeArquivo) {

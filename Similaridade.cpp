@@ -62,7 +62,7 @@ Matriz multiplica_por_transposta(Matriz* A, int tipo)  {
 
 MatrizSimilaridade calcularSimilaridade(Matriz* multiplica_por_transposta, ListaCompras* dados) {
     MatrizSimilaridade S;
-    S.n = multiplica_por_transposta ->linhas;
+    S.n = multiplica_por_transposta->linhas;
 
     S.valores = (float**) malloc(S.n * sizeof(float*));
 

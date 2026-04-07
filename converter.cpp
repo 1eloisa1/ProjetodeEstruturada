@@ -39,9 +39,9 @@ void recomendar_python(std::string cliente, int k) {
 }
 
 PYBIND11_MODULE(sistema_de_recomendacao_py, m) {
-    m.def("carregar", &carregar_python);
-    m.def("processar", &processar_sistema_python);
-    m.def("ver_compras", &mostrar_compras_python);
-    m.def("get_sim", &pegar_similaridade_python);
-    m.def("recomendar", &recomendar_python);
+    m.def("carregar", &carregar_python, py::arg("caminho"));
+    m.def("processar", &processar_sistema_python, py::arg("tipo"));
+    m.def("ver_compras", &mostrar_compras_python, py::arg("cliente"));
+    m.def("get_sim", &pegar_similaridade_python, py::arg("cliente1"), py::arg("cliente2"));
+    m.def("recomendar", &recomendar_python, py::arg("cliente"), py::arg("k"));
 }
