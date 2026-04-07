@@ -44,4 +44,5 @@ PYBIND11_MODULE(sistema_de_recomendacao_py, m) {
     m.def("recomendar", &recomendar);
     m.def("compras", &compras);
     m.def("similar", &similar);
+    m.def("multiplica_por_transposta", &multiplica_por_transposta);
 }

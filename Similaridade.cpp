@@ -22,7 +22,7 @@ Matriz criarMatrizClienteProduto(ListaCompras* dados) {
     return mat;
 }
 
-Matriz multiplica_por_transposta(Matriz* A, int tipo) {
+Matriz multiplica_por_transposta(Matriz* A, int tipo)  {
     Matriz C;
 
     C.linhas = A->linhas;

@@ -12,33 +12,64 @@ def main():
 
     print("\nDados carregados com sucesso!")
 
+    print("\nEscolha o tipo de transposição:")
+    print("0 - Padrão")
+    print("1 - Otimizado")
+
+    try:
+        tipo = int(input(">> "))
+        if tipo not in [0, 1]:
+            print("Valor inválido! Usando padrão (0)")
+            tipo = 0
+    except:
+        print("Valor inválido! Usando padrão (0)")
+        tipo = 0
+
     # Criar matriz cliente-produto
     matriz = sr.criarMatrizClienteProduto(dados)
 
     # Calcular interseção
-    intersecao = sr.multiplica_por_transposta(matriz)
+    intersecao = sr.multiplica_por_transposta(matriz, tipo)
 
     # Calcular similaridade
     similaridade = sr.calcularSimilaridade(intersecao, dados)
 
-    while True:
-        print("\nDigite o código do cliente (ou 'sair'):")
-        cliente = input(">> ")
+    print("\n=== PRODUTOS DE 3 CLIENTES ===")
 
-        if cliente.lower() == "sair":
-            break
+    for i in range(3):
+        cliente = dados.clienteCodigo[i]
+        print(f"\nCliente {cliente}:")
+        sr.mostrarComprasCliente(dados, cliente)
 
-        print("\nQuantas recomendações deseja?")
+    print("\n=== SIMILARIDADE DE 2 PARES ===")
+
+    for i in range(2):
+        c1 = input("\nDigite o código do primeiro cliente: ")
+        c2 = input("Digite o código do segundo cliente: ")
+
+        idx1 = dados.mapaCliente[c1]
+        idx2 = dados.mapaCliente[c2]
+
+        valor = similaridade.valores[idx1][idx2]
+
+        print(f"{c1} x {c2} = {valor}")
+
+
+    print("\n=== RECOMENDAÇÕES PARA 3 CLIENTES ===")
+
+    for i in range(3):
+        cliente = dados.clienteCodigo[i]
+
+        print(f"\nCliente {cliente}")
         try:
-            k = int(input(">> "))
+            k = int(input("Quantas recomendações deseja? "))
         except:
-            print("Valor inválido!")
-            continue
+            print("Valor inválido! Usando k = 3")
+            k = 3
 
-        # Mostrar recomendações
+        print(f"Recomendações para {cliente}:")
         sr.mostraRecomendacoes(dados, similaridade, cliente, k)
 
-    print("\nEncerrando sistema...")
 
 if __name__ == "__main__":
     main()
