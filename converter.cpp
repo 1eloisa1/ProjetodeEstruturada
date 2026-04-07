@@ -36,9 +36,9 @@ void compras(string cliente) {
 
 PYBIND11_MODULE(sistema_de_recomendacao_py, m) {
 
-    m.def("carregar", &carregar);
-    m.def("criar_matriz", &criar_matriz);
-    m.def("calcular", &calcular);
+    m.def("carregarDados", &carregar);
+    m.def("criarMatrizClienteProduto", &criar_matriz);
+    m.def("multiplica_por_transposta", &calcular);
     m.def("recomendar", &recomendar);
     m.def("compras", &compras);
 

@@ -8,7 +8,7 @@ def main():
 
     # Carrega o CSV
     arquivo = "dados_venda_cluster_0.csv"
-    sr.carregarDados(arquivo, dados)
+    sr.carregarDados(arquivo)
 
     print("\nDados carregados com sucesso!")
 
@@ -34,14 +34,14 @@ def main():
     # Calcular similaridade
     similaridade = sr.calcularSimilaridade(intersecao, dados)
 
-    print("\n=== PRODUTOS DE 3 CLIENTES ===")
+    #mostra clientes da atividade 1
 
     for i in range(3):
         cliente = dados.clienteCodigo[i]
         print(f"\nCliente {cliente}:")
         sr.mostrarComprasCliente(dados, cliente)
 
-    print("\n=== SIMILARIDADE DE 2 PARES ===")
+    #similaridade da atividade 2
 
     for i in range(2):
         c1 = input("\nDigite o código do primeiro cliente: ")
@@ -55,7 +55,7 @@ def main():
         print(f"{c1} x {c2} = {valor}")
 
 
-    print("\n=== RECOMENDAÇÕES PARA 3 CLIENTES ===")
+   #recomendação da atividade 3
 
     for i in range(3):
         cliente = dados.clienteCodigo[i]
