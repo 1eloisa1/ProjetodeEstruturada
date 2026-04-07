@@ -22,21 +22,40 @@ Matriz criarMatrizClienteProduto(ListaCompras* dados) {
     return mat;
 }
 
-Matriz calculaTransposta(Matriz* A) {
-    Matriz At;
-    At.linhas = A->colunas;
-    At.colunas = A->linhas;
+Matriz multiplica_por_transposta(Matriz* A, int tipo) {
+    Matriz C;
 
-    At.valores = (int**) malloc(At.linhas * sizeof(int*));
+    C.linhas = A->linhas;
+    C.colunas = A->linhas;
 
-    for (int i = 0; i < At.linhas; i++)
-        At.valores[i] = (int*) malloc(At.colunas * sizeof(int));
+    C.valores = (int**) malloc(C.linhas * sizeof(int*));
 
-    for (int i = 0; i < A->linhas; i++)
-        for (int j = 0; j < A->colunas; j++)
-            At.valores[j][i] = A->valores[i][j];
+    for (int i = 0; i < C.linhas; i++) {
+        C.valores[i] = (int*) malloc(C.colunas * sizeof(int));
 
-    return At;
+        for (int j = 0; j < C.colunas; j++)
+            C.valores[i][j] = 0;
+    }
+
+    if (tipo == 0) {
+        for (int i = 0; i < A->linhas; i++)
+            for (int j = 0; j < A->linhas; j++)
+                for (int k = 0; k < A->colunas; k++)
+                    C.valores[i][j] += A->valores[i][k] * A->valores[j][k];
+    } else {
+        for (int i = 0; i < A->linhas; i++) {
+            for (int j = i; j < A->linhas; j++) {
+                int soma = 0;
+                for (int k = 0; k < A->colunas; k++)
+                    soma += A->valores[i][k] * A->valores[j][k];
+
+                C.valores[i][j] = soma;
+                C.valores[j][i] = soma;
+            }
+        }
+    }
+
+    return C;
 }
 
 Matriz calcularIntersecao(Matriz* A, Matriz* At) {
@@ -61,34 +80,6 @@ Matriz calcularIntersecao(Matriz* A, Matriz* At) {
     return I;
 }
 
-Matriz multiplica_por_transposta(Matriz* A) {
-    Matriz C;
-    C.linhas = A->linhas;
-    C.colunas = A->linhas;
-
-    C.valores = (int**) malloc(C.linhas * sizeof(int*));
-
-    for (int i = 0; i < C.linhas; i++) {
-        C.valores[i] = (int*) malloc(C.colunas * sizeof(int));
-        for (int j = 0; j < C.colunas; j++)
-            C.valores[i][j] = 0;
-    }
-
-    for (int i = 0; i < C.linhas; i++) {
-        for (int j = i; j < C.linhas; j++) {
-            int soma = 0;
-
-            for (int k = 0; k < A->colunas; k++) {
-                soma += A->valores[i][k] * A->valores[j][k];
-            }
-
-            C.valores[i][j] = soma;
-            C.valores[j][i] = soma;
-        }
-    }
-
-    return C;
-}
 
 MatrizSimilaridade calcularSimilaridade(Matriz* intersecao, ListaCompras* dados) {
     MatrizSimilaridade S;

@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include "Recomendacao.h"
-
+//mesma coisa mas muda
 using namespace std;
 
 bool compararSimilaridade(const ProdutoRanqueado &a, const ProdutoRanqueado &b) {

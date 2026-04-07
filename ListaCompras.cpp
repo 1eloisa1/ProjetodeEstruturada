@@ -4,7 +4,7 @@
 #include <string.h>
 #include <algorithm>
 #include "ListaCompras.h"
-
+//mesma coisa
 using namespace std;
 
 void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
@@ -14,10 +14,12 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
         exit(1);
     }
 
-    char data[50], codCliente[50], codProduto[50], nomeProduto[250];
 
     char cabecalho[500];
     fgets(cabecalho, sizeof(cabecalho), arquivo);
+
+
+    char data[50], codCliente[50], codProduto[50], nomeProduto[250];
 
     while (fscanf(arquivo, " %[^,],%[^,],%[^,],%[^\n]", data, codCliente, codProduto, nomeProduto) == 4) {
 

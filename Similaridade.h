@@ -17,11 +17,12 @@ typedef struct {
 
 
 Matriz criarMatrizClienteProduto(ListaCompras* dados);
-Matriz calculaTransposta(Matriz* A);
 Matriz calcularIntersecao(Matriz* A, Matriz* At);
 Matriz multiplica_por_transposta(Matriz* A);
 
 MatrizSimilaridade calcularSimilaridade(Matriz* intersecao, ListaCompras* dados);
+
+Matriz multiplica_por_transposta(Matriz* A, int tipo);
 
 void liberarMatriz(Matriz mat);
 

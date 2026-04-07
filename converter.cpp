@@ -7,43 +7,41 @@
 
 namespace py = pybind11;
 
+ListaCompras dados;
+Matriz matriz;
+Matriz intersecao;
+MatrizSimilaridade sim;
+
+void carregar(string caminho) {
+    carregarDados(&dados, caminho.c_str());
+}
+
+void criar_matriz() {
+    matriz = criarMatrizClienteProduto(&dados);
+}
+
+void calcular(bool otimizado) {
+    intersecao = multiplica_por_transposta(&matriz, otimizado ? 1 : 0);
+    sim = calcularSimilaridade(&intersecao, &dados);
+}
+
+void recomendar(string cliente, int k) {
+    mostraRecomendacoes(&dados, &sim, cliente, k);
+}
+
+void compras(string cliente) {
+    mostrarComprasCliente(&dados, cliente);
+}
+
+int similar(int cliente) {
+    return clienteMaisSimilar(&sim, cliente);
+}
+
 PYBIND11_MODULE(sistema_de_recomendacao_py, m) {
-    m.doc() = "Sistema de recomendacao em C++ integrado com Python";
-
-    // =========================
-    // Classe ListaCompras
-    // =========================
-    py::class_<ListaCompras>(m, "ListaCompras")
-        .def(py::init<>());
-
-    // =========================
-    // Estruturas de Matriz
-    // =========================
-    py::class_<Matriz>(m, "Matriz")
-        .def(py::init<>());
-
-    py::class_<MatrizSimilaridade>(m, "MatrizSimilaridade")
-        .def(py::init<>());
-
-    // =========================
-    // Funções expostas
-    // =========================
-
-    m.def("carregarDados", &carregarDados, 
-        py::arg("dados"), py::arg("nomeArquivo"));
-
-    m.def("criarMatrizClienteProduto", &criarMatrizClienteProduto,
-        py::arg("dados"));
-
-    m.def("multiplica_por_transposta", &multiplica_por_transposta,
-        py::arg("matriz"));
-
-    m.def("calcularSimilaridade", &calcularSimilaridade,
-        py::arg("intersecao"), py::arg("dados"));
-
-    m.def("mostraRecomendacoes", &mostraRecomendacoes,
-        py::arg("dados"),
-        py::arg("similaridade"),
-        py::arg("codigoCliente"),
-        py::arg("k"));
+    m.def("carregar", &carregar);
+    m.def("criar_matriz", &criar_matriz);
+    m.def("calcular", &calcular);
+    m.def("recomendar", &recomendar);
+    m.def("compras", &compras);
+    m.def("similar", &similar);
 }
