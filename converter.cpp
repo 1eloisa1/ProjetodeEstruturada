@@ -6,7 +6,7 @@
 
 namespace py = pybind11;
 
-// Variáveis globais no C++ (o estado do sistema)
+// Variáveis globais no C++ 
 ListaCompras dados;
 Matriz matriz;
 Matriz intersecao;

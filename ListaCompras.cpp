@@ -14,10 +14,8 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
         exit(1);
     }
 
-
     char cabecalho[500];
     fgets(cabecalho, sizeof(cabecalho), arquivo);
-
 
     char data[50], codCliente[50], codProduto[50], nomeProduto[250];
 
@@ -47,7 +45,6 @@ void carregarDados(ListaCompras *dados, const char *nomeArquivo) {
             indiceProduto = dados->mapaProduto[produtoStr];
         }
 
-        // EVITA DUPLICADOS
         if (find(dados->comprasCliente[indiceCliente].begin(),
                  dados->comprasCliente[indiceCliente].end(),
                  indiceProduto) == dados->comprasCliente[indiceCliente].end()) {

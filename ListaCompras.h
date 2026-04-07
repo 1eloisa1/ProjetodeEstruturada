@@ -1,6 +1,6 @@
 #ifndef LISTACOMPRAS_H
 #define LISTACOMPRAS_H
-//permanece igual
+
 #include <vector>
 #include <list>
 #include <map>
