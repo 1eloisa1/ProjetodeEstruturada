@@ -29,7 +29,8 @@ void mostraRecomendacoes(ListaCompras *dados, MatrizSimilaridade *S, string codi
     }
 
     for (int s : vizinhos) {
-        for (int p : dados->comprasCliente[s]) {
+        for (int p : dados->comprasCliente[]
+            s]) {
 
             if (find(dados->comprasCliente[indice].begin(),
                      dados->comprasCliente[indice].end(),
