@@ -16,7 +16,7 @@ void carregar_python(std::string caminho) {
     carregarDados(&dados, caminho.c_str());
 }
 
-// Essa é a parte que vamos cronometrar no Python
+// cronometrar no Python
 void processar_sistema_python(int tipo) {
     matriz = criarMatrizClienteProduto(&dados);
     intersecao = multiplica_por_transposta(&matriz, tipo);

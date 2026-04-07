@@ -17,7 +17,6 @@ typedef struct {
 
 
 Matriz criarMatrizClienteProduto(ListaCompras* dados);
-Matriz calcularIntersecao(Matriz* A, Matriz* At);
 
 Matriz multiplica_por_transposta(Matriz* A, int tipo);
 

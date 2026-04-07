@@ -58,32 +58,11 @@ Matriz multiplica_por_transposta(Matriz* A, int tipo)  {
     return C;
 }
 
-Matriz calcularIntersecao(Matriz* A, Matriz* At) {
-    Matriz I;
-    I.linhas = A->linhas;
-    I.colunas = A->linhas;
-
-    I.valores = (int**) malloc(I.linhas * sizeof(int*));
-
-    for (int i = 0; i < I.linhas; i++) {
-        I.valores[i] = (int*) malloc(I.colunas * sizeof(int));
-
-        for (int j = 0; j < I.colunas; j++) {
-            I.valores[i][j] = 0;
-
-            for (int k = 0; k < A->colunas; k++) {
-                I.valores[i][j] += A->valores[i][k] * At->valores[k][j];
-            }
-        }
-    }
-
-    return I;
-}
 
 
-MatrizSimilaridade calcularSimilaridade(Matriz* intersecao, ListaCompras* dados) {
+MatrizSimilaridade calcularSimilaridade(Matriz* multiplica_por_transposta, ListaCompras* dados) {
     MatrizSimilaridade S;
-    S.n = intersecao->linhas;
+    S.n = multiplica_por_transposta ->linhas;
 
     S.valores = (float**) malloc(S.n * sizeof(float*));
 
@@ -96,7 +75,7 @@ MatrizSimilaridade calcularSimilaridade(Matriz* intersecao, ListaCompras* dados)
             if (total == 0)
                 S.valores[i][j] = 1.0;
             else
-                S.valores[i][j] = 1.0 - ((float)intersecao->valores[i][j] / total);
+                S.valores[i][j] = 1.0 - ((float)multiplica_por_transposta->valores[i][j] / total);
         }
     }
 

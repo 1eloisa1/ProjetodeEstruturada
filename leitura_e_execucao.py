@@ -14,25 +14,28 @@ def main():
     
     print(f"\nProcessamento concluído em {fim - inicio:.4f} segundos!")
 
-    #AT 1: VER COMPRAS 
+    #AT 1 
     print("\nCONSULTA DE COMPRAS")
     for i in range(1, 4):
         cliente = input(f"Digite o código do {i}º cliente para ver compras: ")
         sr.ver_compras(cliente)
 
-    #AT 2 e 4: SIMILARIDADE
+    #AT 2 e 4
     print("\nCONSULTA DE SIMILARIDADE")
     for i in range(1, 3):
-        print(f"\nPar {i}:")
         c1 = input("Digite o código do 1º cliente: ")
         c2 = input("Digite o código do 2º cliente: ")
-        valor = sr.get_sim(c1, c2)
-        if valor >= 0:
-            print(f"Similaridade entre {c1} e {c2}: {valor:.4f}")
-        else:
-            print("Erro: Um ou ambos os clientes não existem.")
+        if c1 == c2:
+            print("Os clientes são iguais, similaridade é 1.0")
+            continue
+        else: 
+            valor = sr.get_sim(c1, c2)
+            if valor >= 0:
+                print(f"Similaridade entre {c1} e {c2}: {valor:.4f}")
+            else:
+                print("Erro: Um ou ambos os clientes não existem.")
 
-    #AT 3: RECOMENDAÇÃO
+    #AT 3
     print("\nCONSULTA DE RECOMENDAÇÃO")
     for i in range(1, 4):
         cliente = input(f"\nDigite o código do {i}º cliente para recomendação: ")
