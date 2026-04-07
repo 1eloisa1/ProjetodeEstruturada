@@ -1,9 +1,0 @@
-1
-
-
-g++ main.cpp ListaCompras.cpp Similaridade.cpp Recomendacao.cpp -o execSistema
-
-2
-
-
-./execSistema

@@ -33,16 +33,14 @@ void compras(string cliente) {
     mostrarComprasCliente(&dados, cliente);
 }
 
-int similar(int cliente) {
-    return clienteMaisSimilar(&sim, cliente);
-}
 
 PYBIND11_MODULE(sistema_de_recomendacao_py, m) {
+
     m.def("carregar", &carregar);
     m.def("criar_matriz", &criar_matriz);
     m.def("calcular", &calcular);
     m.def("recomendar", &recomendar);
     m.def("compras", &compras);
-    m.def("similar", &similar);
-    m.def("multiplica_por_transposta", &multiplica_por_transposta);
+
+    //m.def("multiplica_por_transposta", &multiplica_por_transposta);
 }

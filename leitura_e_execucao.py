@@ -8,7 +8,7 @@ def main():
 
     # Carrega o CSV
     arquivo = "dados_venda_cluster_0.csv"
-    sr.carregarDados(dados, arquivo)
+    sr.carregarDados(arquivo, dados)
 
     print("\nDados carregados com sucesso!")
 
